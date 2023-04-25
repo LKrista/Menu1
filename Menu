@@ -1,0 +1,90 @@
+!DOCTYPE html>
+<html>
+  <head>
+    <title>Restaurant menu</title>
+    <style>
+      body {
+        background-image: url('https://static.vecteezy.com/system/resources/previews/003/146/113/non_2x/restaurant-menu-design-template-free-vector.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: auto;
+        margin-top: 60px;
+        max-width: 500px;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+input[type="file"] {
+        margin-bottom: 20px;
+      }
+      button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Add new items to restaurant menu's</h1>
+      <form id="menuForm" enctype="multipart/form-data">
+        <label for="name">Foods/items Name:</label>
+        <input type="text" id="name" name="name" required>
+<label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+        
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" required>
+        
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image">
+        
+        <button type="submit">Add Item</button>
+      </form>
+      
+      <script>
+        const form = document.getElementById('menuForm');
+        
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          
+          const formData = new FormData(form);
+ fetch('/api/addMenuItem', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            alert('Menu item added successfully!');
+            form.reset();
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Error adding menu item.');
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
